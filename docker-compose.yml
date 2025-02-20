@@ -1,0 +1,42 @@
+services:
+
+#----------------- sample service 1 -----------------
+
+  search_system:
+    # ビルド設定
+    build:
+      context: ./
+      # ビルドする際に使用するDockerfileを指定
+      dockerfile: dockerfile
+      #.envファイルから読み込んだ環境変数をdockerfileで使用する
+      args:
+        - http_tmp=$http_proxy
+        - https_tmp=$https_proxy
+    
+    container_name: search_system
+
+    # 環境変数ファイルを読込む
+    env_file:
+      - .env
+
+    # ボリュームをマウント
+    volumes:
+      - ./workspace:/workspace
+    # マウントしたボリュームをワーキングディレクトリに設定
+    working_dir: /workspace
+
+    # コンテナを永続化
+    command: tail -f /dev/null
+  
+    # ネットワークを指定
+    networks:
+      - custom_network_name # ここにネットワーク名を指定
+    
+    #ポート番号
+    ports:
+      - "8080:8080"
+
+
+networks:
+  custom_network_name:
+    name: currency #ここを書き換える

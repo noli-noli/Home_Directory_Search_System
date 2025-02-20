@@ -1,0 +1,79 @@
+l, null, null);  // UNIX socket.
+    }
+
+    this.handoff(worker);  // In case there are connections pending.
+  };
+
+  if (this.server === null)
+    return done();
+
+  // Still busy binding.
+  this.server.once('listening', done);
+  this.server.once('error', (err) => {
+    send(err.errno, null);
+  });
+};
+
+RoundRobinHandle.prototype.remove = function(worker) {
+  const existed = this.all.delete(worker.id);
+
+  if (!existed)
+    return false;
+
+  this.free.delete(worker.id);
+
+  if (this.all.size !== 0)
+    return false;
+
+  while (!isEmpty(this.handles)) {
+    const handle = peek(this.handles);
+    handle.close();
+    remove(handle);
+  }
+
+  this.handle.close();
+  this.handle = null;
+  return true;
+};
+
+RoundRobinHandle.prototype.distribute = function(err, handle) {
+  // If `accept` fails just skip it (handle is undefined)
+  if (err) {
+    return;
+  }
+  append(this.handles, handle);
+  // eslint-disable-next-line node-core/no-array-destructuring
+  const [ workerEntry ] = this.free; // this.free is a SafeMap
+
+  if (ArrayIsArray(workerEntry)) {
+    const { 0: workerId, 1: worker } = workerEntry;
+    this.free.delete(workerId);
+    this.handoff(worker);
+  }
+};
+
+RoundRobinHandle.prototype.handoff = function(worker) {
+  if (!this.all.has(worker.id)) {
+    return;  // Worker is closing (or has closed) the server.
+  }
+
+  const handle = peek(this.handles);
+
+  if (handle === null) {
+    this.free.set(worker.id, worker);  // Add to ready queue again.
+    return;
+  }
+
+  remove(handle);
+
+  const message = { act: 'newconn', key: this.key };
+
+  sendHelper(worker.process, message, handle, (reply) => {
+    if (reply.accepted)
+      handle.close();
+    else
+      this.distribute(0, handle);  // Worker is shutting down. Send to another.
+
+    this.handoff(worker);
+  });
+};

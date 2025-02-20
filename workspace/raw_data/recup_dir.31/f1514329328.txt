@@ -1,0 +1,16 @@
+ enqueueMicrotask(FunctionPrototypeBind(runMicrotask, asyncResource));
+}
+
+module.exports = {
+  setupTaskQueue() {
+    // Sets the per-isolate promise rejection callback
+    listenForRejections();
+    // Sets the callback to be run in every tick.
+    setTickCallback(processTicksAndRejections);
+    return {
+      nextTick,
+      runNextTicks
+    };
+  },
+  queueMicrotask
+};

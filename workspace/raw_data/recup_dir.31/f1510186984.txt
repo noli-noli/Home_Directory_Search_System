@@ -1,0 +1,2 @@
+peof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})};var i=n(385),r=exports;for(var o in i)r[o]=i[o];i.__esModule&&Object.defineProperty(r,"__esModule",{value:!0})})();
+//# sourceMappingURL=https://main.vscode-cdn.net/sourcemaps/f1a4fb101478ce6ec82fe9627c43efbf9e98c813/extensions/html-language-features/client/dist/node/htmlClientMain.js.map

@@ -1,0 +1,12 @@
+StringArray(options.categories, 'options.categories');
+
+  if (options.categories.length <= 0)
+    throw new ERR_TRACE_EVENTS_CATEGORY_REQUIRED();
+
+  return new Tracing(options.categories);
+}
+
+module.exports = {
+  createTracing,
+  getEnabledCategories
+};

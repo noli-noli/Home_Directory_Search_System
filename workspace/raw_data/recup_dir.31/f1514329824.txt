@@ -1,0 +1,36 @@
+ {object}
+ */
+async function defaultLoad(url, context) {
+  let responseURL = url;
+  const { importAssertions } = context;
+  let {
+    format,
+    source,
+  } = context;
+
+  if (format == null) {
+    format = await defaultGetFormat(url, context);
+  }
+
+  validateAssertions(url, format, importAssertions);
+
+  if (
+    format === 'builtin' ||
+    format === 'commonjs'
+  ) {
+    source = null;
+  } else if (source == null) {
+    ({ responseURL, source } = await getSource(url, context));
+  }
+
+  return {
+    __proto__: null,
+    format,
+    responseURL,
+    source,
+  };
+}
+
+module.exports = {
+  defaultLoad,
+};

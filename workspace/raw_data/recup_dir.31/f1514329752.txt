@@ -1,0 +1,11 @@
+JobsForUrl = super.get(url) ?? ObjectCreate(null);
+    cachedJobsForUrl[type] = job;
+    return super.set(url, cachedJobsForUrl);
+  }
+  has(url, type = kImplicitAssertType) {
+    validateString(url, 'url');
+    validateString(type, 'type');
+    return super.get(url)?.[type] !== undefined;
+  }
+}
+module.exports = ModuleMap;

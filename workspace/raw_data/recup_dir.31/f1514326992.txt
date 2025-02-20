@@ -1,0 +1,19 @@
+ options = ArrayPrototypePop(streams);
+      signal = options.signal;
+      end = options.end;
+    }
+
+    pl(streams, (err, value) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(value);
+      }
+    }, { signal, end });
+  });
+}
+
+module.exports = {
+  finished,
+  pipeline,
+};

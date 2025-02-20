@@ -1,0 +1,14 @@
+ || stream === undefined) {
+    if (typeof callback === 'function') process.nextTick(callback, null);
+    return true;
+  }
+
+  return stream.write(kClearScreenDown, callback);
+}
+
+module.exports = {
+  clearLine,
+  clearScreenDown,
+  cursorTo,
+  moveCursor,
+};

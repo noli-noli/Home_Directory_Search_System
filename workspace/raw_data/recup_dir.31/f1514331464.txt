@@ -1,0 +1,7 @@
+r.prototype.isDead = function() {
+  return this.process.exitCode != null || this.process.signalCode != null;
+};
+
+Worker.prototype.isConnected = function() {
+  return this.process.connected;
+};

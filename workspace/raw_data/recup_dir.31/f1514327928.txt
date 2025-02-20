@@ -1,0 +1,15 @@
+ternalBinding('module_wrap');
+    const wrapped = importModuleDynamicallyWrap(importModuleDynamically);
+    const func = result.function;
+    callbackMap.set(result.cacheKey, {
+      importModuleDynamically: (s, _k, i) => wrapped(s, func, i),
+    });
+  }
+
+  return result;
+}
+
+module.exports = {
+  internalCompileFunction,
+  isContext,
+};

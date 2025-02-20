@@ -1,0 +1,26 @@
+'}`;
+        if (this.#reported[0] && this.#reported[0].nesting === data.nesting && this.#reported[0].name === data.name) {
+          // If this test has had children - it was already reported, so slightly modify the output
+          ArrayPrototypeShift(this.#reported);
+          return `${prefix}${indent}${color}${symbols['arrow:right']}${white}${title}\n\n`;
+        }
+        const error = this.#formatError(data.details?.error, indent);
+        if (skippedSubtest) {
+          color = gray;
+          symbol = symbols['hyphen:minus'];
+        }
+        return `${prefix}${indent}${color}${symbol}${title}${error}${white}\n`;
+      }
+      case 'test:start':
+        ArrayPrototypeUnshift(this.#stack, { __proto__: null, data, type });
+        break;
+      case 'test:diagnostic':
+        return `${color}${this.#indent(data.nesting)}${symbol}${data.message}${white}\n`;
+    }
+  }
+  _transform({ type, data }, encoding, callback) {
+    callback(null, this.#handleEvent({ type, data }));
+  }
+}
+
+module.exports = SpecReporter;

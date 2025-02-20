@@ -1,0 +1,4 @@
+so the connection will be disposed.
+2024-12-20 17:37:29.366 [info] [<unknown>][bee3115f][ExtensionHostConnection] <3100719> Extension Host Process exited with code: 0, signal: null.
+2024-12-20 17:37:29.367 [info] Last EH closed, waiting before shutting down
+2024-12-20 17:42:29.369 [info] Last EH closed, shutting down
