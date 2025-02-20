@@ -1,6 +1,7 @@
 import faiss
 import os
 import csv
+import pandas as pd
 import pickle
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -21,9 +22,27 @@ def load_file_mapping(csv_data_path):
         reader = csv.reader(f)
         next(reader)  # ヘッダーをスキップ
         for row in reader:
-            mapping[int(row[0])] = row[2]  # ID -> FilePath
+            mapping[int(row[0])] = row[1]  # ID -> FilePath
     return mapping
 
+def get_file_content(df, file_name):
+    # FileName に一致する行を探す
+    row = df[df["FileName"] == file_name]
+    
+    if row.empty:
+        print(f"FileName '{file_name}' が見つかりません。")
+        return None
+
+    file_path = row.iloc[0]["FilePath"]  # 最初の一致する FilePath を取得
+
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            content = f.read()  # ファイルの内容を変数に格納
+        return content
+    except Exception as e:
+        print(f"ファイル '{file_path}' を開く際にエラー: {e}")
+        return None
+    
 def search(query, index, vectorizer, file_mapping, top_k=10):
     """ クエリをFAISSで検索し、類似するファイルを返す """
     query_vec = vectorizer.transform([query]).toarray().astype(np.float32)
@@ -36,7 +55,8 @@ def search(query, index, vectorizer, file_mapping, top_k=10):
     
     return results
 
-if __name__ == "__main__":
+
+def main():
     faiss_data_path = os.path.join("/workspace", "dataset", "faiss_sample.bin")
     vocab_path = os.path.join("/workspace", "dataset", "vocab_idx.pickle")
     csv_data_path = os.path.join("/workspace", "dataset", "name_other.csv")
@@ -77,3 +97,7 @@ while True:
     print("検索結果:")
     for filepath, score in search_results:
         print(f"{filepath} (類似度: {score})")
+
+
+if __name__ == "__main__":
+    main()

@@ -3,3 +3,4 @@ uvicorn
 requests
 faiss-cpu
 scikit-learn
+pandas

@@ -8,8 +8,8 @@ ARG http_tmp
 ARG https_tmp
 
 #コンテナに環境変数の設定を追加
-ENV http_proxy=$http_tmp
-ENV https_proxy=$https_tmp
+# ENV http_proxy=$http_tmp
+# ENV https_proxy=$https_tmp
 
 #タイムゾーンを東京に設定
 ENV TZ=Asia/Tokyo
