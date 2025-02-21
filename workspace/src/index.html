@@ -37,7 +37,7 @@
 
 <script>
 function sendCode() {
-    var END_POINT = "http://127.0.0.1:8080/vecter_search/"
+    var END_POINT = "http://133.89.44.20:8080/vecter_search/"
     var code = document.getElementById("inputCode").value;
     console.log(code);
     fetch(END_POINT, {
@@ -57,7 +57,7 @@ function sendCode() {
 }
 
 function requestfile(file_number){
-    var END_POINT = "http://127.0.0.1:8080/query_file/"
+    var END_POINT = "http://133.89.44.20:8080/query_file/"
     console.log(file_number);
     fetch(END_POINT, {
         method: "POST",

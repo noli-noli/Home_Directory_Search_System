@@ -1,4 +1,0 @@
-2024-01-23 08:28:02 - ********** Running test **********
-2024-01-23 08:28:02 -    Num examples = 1000
-2024-01-23 08:28:02 -    Batch size = 32
-2024-01-23 08:28:02 -    Model save path: ./saved_model/microsoft-codebert-base_mean_2024-01-22_10-11-03

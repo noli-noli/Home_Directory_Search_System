@@ -4,3 +4,4 @@ requests
 faiss-cpu
 scikit-learn
 pandas
+jinja2

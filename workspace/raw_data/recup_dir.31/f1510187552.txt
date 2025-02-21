@@ -1,8 +1,0 @@
-2024-01-23 08:40:38 - ********** Running training **********
-2024-01-23 08:40:38 -    Num examples = 16000
-2024-01-23 08:40:38 -    Num Epochs = 10
-2024-01-23 08:40:38 -    Batch size = 16
-2024-01-23 08:40:38 -    Pooler name = mean
-2024-01-23 08:40:38 -    Evaluate step = 100
-2024-01-23 08:40:38 -    Model save path: ./saved_model/microsoft-codebert-base_mean_2024-01-23_08-40-17
-2024-01-23 10:50:13 - Save model to ./saved_model/microsoft-codebert-base_mean_2024-01-23_08-40-17

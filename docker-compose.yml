@@ -22,6 +22,7 @@ services:
     # ボリュームをマウント
     volumes:
       - ./workspace:/workspace
+      - /srv/home_data:/workspace/raw_data
     # マウントしたボリュームをワーキングディレクトリに設定
     working_dir: /workspace
 

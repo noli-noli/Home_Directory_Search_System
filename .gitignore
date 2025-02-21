@@ -1,0 +1,5 @@
+workspace/raw_data/tmp
+workspace/raw_data_tmp
+*.csv
+*pickle
+*.bin

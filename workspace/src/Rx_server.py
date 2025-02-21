@@ -1,5 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.templating import Jinja2Templates
 from faiss_dataset_check import *
 import uvicorn
 import json
@@ -7,6 +8,10 @@ from pydantic import BaseModel
 
 
 app = FastAPI()
+
+
+# テンプレートのディレクトリを指定
+templates = Jinja2Templates(directory="./")
 
 
 # CORS 設定
@@ -26,9 +31,8 @@ class FILE_NUMBER(BaseModel):
     file_number: str
 
 @app.get("/")
-async def root():
-    print("check")
-    return {"takelab_data_rescure"}
+async def root(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.post("/query_file_test/")
 async def query_file(item: FILE_NUMBER):
@@ -80,7 +84,7 @@ async def lcs_search(item: INPUT_CODE):
 
 
 if __name__ == "__main__":
-    faiss_data_path = os.path.join("/workspace", "dataset", "faiss_sample.bin")
+    faiss_data_path = os.path.join("/workspace", "dataset", "batchs", "tmp_faiss.bin")
     vocab_path = os.path.join("/workspace", "dataset", "vocab_idx.pickle")
     csv_data_path = os.path.join("/workspace", "dataset", "name_other.csv")
     

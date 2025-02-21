@@ -1,8 +1,0 @@
-Address.prototype.constructor;
-ObjectSetPrototypeOf(InternalSocketAddress.prototype, SocketAddress.prototype);
-
-module.exports = {
-  SocketAddress,
-  InternalSocketAddress,
-  kHandle,
-};
